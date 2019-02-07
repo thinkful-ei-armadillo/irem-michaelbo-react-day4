@@ -4,7 +4,7 @@ import STORE from './STORE';
 import './App.css';
 
 class App extends Component {
-  state= {...STORE};
+  
   static defaultProps = {
     store: {
       lists: [],
@@ -12,14 +12,30 @@ class App extends Component {
     },
   }; 
 
-  handleDeleteButton= (e, id)=> {
+  state= {...STORE};
+
+  handleDeleteButton = (cardId) => {
     // console.log('you clicked the button');
     // console.log(this.state.allCards);
-    console.log(e.id);
-    let newArray = this.state.allCards.filter((item, id) => item.id !== id);
+    console.log(this.state.lists);
+    const newList = this.state.lists.map((list) => {
+     
+      return Object.assign({}, list, {cardIds: list.cardIds.filter(id => id !== cardId)});
+    // <List key={list.id} cards={list.cardIds.filter(id => id !== cardId) }/>
+  })
+    console.log(newList); 
+    console.log(cardId);
     // { lists.map((list) => <List key={list.id} header={list.header} cards={list.cardIds.map(id => allCards[id])} />
-    console.log(newArray);
-    // this.setState(newArray);
+    // console.log(newArray);
+
+   
+
+    this.setState ({
+      
+         lists: newList,
+         
+      
+    })
   }
 
   render() {
