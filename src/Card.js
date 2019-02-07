@@ -5,10 +5,11 @@ import './Card.css';
 
 export default function Card(props) {
   // console.log(props.id);
+
   return (
     <div className='Card'> 
       <button 
-        type='button' onClick={()=> props.handleDeleteButton(props.id)}
+        type='button' onClick={()=>props.handleDeleteButton(props.id)}
       >
         delete
       </button>
@@ -18,4 +19,3 @@ export default function Card(props) {
   )
 }
 
-// git rm --cached node_modules
