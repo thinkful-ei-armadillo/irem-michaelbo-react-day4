@@ -26,6 +26,10 @@ class App extends Component {
     console.log(this.state.lists);
   }
 
+  handleAddButton = () => {
+    
+  }
+
   render() {
     // const { store } = this.state
     return (
