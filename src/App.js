@@ -26,25 +26,25 @@ class App extends Component {
     console.log(this.state.lists);
   }
 
-  handleAddButton = (props) => {
+  handleAddButton = (listId) => {
     console.log('Button clicked');
     const newRandomCard = () => {
-      const id = Math.random().toString(36).substring(2, 4)
-        + Math.random().toString(36).substring(2, 4);
-      //  console.log(id); 
+      const id = Math.random().toString(36).substring(2, 4) + Math.random().toString(36).substring(2, 4);
+       console.log(id); 
       return {
-        id,
+        id: id,
         title: `Random Card ${id}`,
         content: 'lorem ipsum',
       }
     }
-    console.log('Waiting for card')
-    console.log(newRandomCard.id);
+    console.log('Waiting  for card')
+    const newCard = newRandomCard();
+    console.log(listId);
     this.setState({
-      lists: [...this.state.lists[props.id].cardIds, newRandomCard.id],
+      lists: [...this.state.lists[listId].cardIds, newCard.id],
       allCards: {
         ...this.state.allCards,
-        id : newRandomCard
+        id : newCard.id
       }
     })
   }
@@ -59,9 +59,10 @@ class App extends Component {
         <div className='App-list'>
           {this.state.lists.map(list => (
             <List
+              id={list.id}
               key={list.id}
               header={list.header}
-              cards={list.cardIds.map(id => this.state.allCards[id])}
+              cards={list.cardIds.map(id => {return this.state.allCards[id]})}
               handleDeleteButton={this.handleDeleteButton}
               handleAddButton={this.handleAddButton}
             />
