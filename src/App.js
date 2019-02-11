@@ -4,17 +4,11 @@ import STORE from './STORE';
 import './App.css';
 
 class App extends Component {
-  
-  // static defaultProps = {
-  //   store: {
-  //     lists: [],
-  //     allCards: {},
-  //   },
-  // }; 
-
   state= {...STORE};
 
   handleDeleteButton = (cardId) => {
+    console.log(cardId);
+    console.log('Button clicked');
     const newList = this.state.lists.map((list) => {
       return Object.assign({}, list, {cardIds: list.cardIds.filter(id => id !== cardId)});
   })
@@ -27,25 +21,31 @@ class App extends Component {
   }
 
   handleAddButton = (listId) => {
-    console.log('Button clicked');
     const newRandomCard = () => {
       const id = Math.random().toString(36).substring(2, 4) + Math.random().toString(36).substring(2, 4);
-       console.log(id); 
       return {
         id: id,
         title: `Random Card ${id}`,
         content: 'lorem ipsum',
       }
     }
-    console.log('Waiting  for card')
+
     const newCard = newRandomCard();
-    console.log(listId);
-    this.setState({
-      lists: [...this.state.lists[listId].cardIds, newCard.id],
-      allCards: {
-        ...this.state.allCards,
-        id : newCard.id
+    console.log(newCard.id); 
+
+    const newList = this.state.lists.map(list => {
+      if(list.id === listId){
+        return Object.assign({}, list, 
+          {cardIds: [...list.cardIds, newCard.id]});
       }
+      return list;
+        });
+    
+    let allCards = this.state.allCards;
+    allCards[newCard.id]= newCard;
+    this.setState({
+      lists: newList, 
+      allCards: allCards
     })
   }
 
